@@ -422,7 +422,7 @@ footer{background:var(--bg2);border-top:1px solid var(--line);padding:44px 0 26p
       <h1 class="rv in" style="--d:.06s">Feel the <span class="buzz">buzz.</span></h1>
       <p class="lead rv in" style="--d:.12s">An endless feed of playful, grown-up reels. Scroll, vibe, repeat — made for nights that never end early.</p>
       <div class="cta-col rv in" style="--d:.18s">
-        <a class="btn btn-primary js-dl" href="https://github.com/BunnyBuzz/Bunny-Legal/releases/latest" target="_blank" rel="noopener">
+        <a class="btn btn-primary js-dl" href="https://github.com/BunnyBuzz/Bunny-Legal/releases/latest/download/app-release.apk" target="_blank" rel="noopener">
           <svg class="is" viewBox="0 0 24 24"><use href="#i-dl"/></svg>
           Download for Android
         </a>
@@ -616,27 +616,6 @@ var co=new IntersectionObserver(function(es){es.forEach(function(en){
   })(t0);
 })},{threshold:.6});
  $$('.cnt').forEach(function(el){co.observe(el)});
-
-/* ================================================================
-   زر التحميل الذكي — يجلب رابط APK من آخر إصدار تلقائيًا
-   ================================================================ */
-var dlLinks=$$('.js-dl'), dlUrl=null;
-
-fetch('https://api.github.com/repos/BunnyBuzz/Bunny-Legal/releases')
-  .then(function(r){return r.json()})
-  .then(function(releases){
-    for(var i=0;i<releases.length;i++){
-      var assets=releases[i].assets||[];
-      for(var j=0;j<assets.length;j++){
-        if(/\.apk$/i.test(assets[j].name)){
-          dlUrl=assets[j].browser_download_url;
-          dlLinks.forEach(function(a){a.href=dlUrl});
-          return;
-        }
-      }
-    }
-  })
-  .catch(function(){/* يبقى الرابط الاحتياطي opens latest release */});
 
 dlLinks.forEach(function(a){a.addEventListener('click',function(){
   toast(dlUrl?'Downloading…':'Opening latest release…');
