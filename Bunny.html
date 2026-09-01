@@ -622,15 +622,17 @@ var co=new IntersectionObserver(function(es){es.forEach(function(en){
    ================================================================ */
 var dlLinks=$$('.js-dl'), dlUrl=null;
 
-fetch('https://api.github.com/repos/BunnyBuzz/Bunny-Legal/releases/latest')
+fetch('https://api.github.com/repos/BunnyBuzz/Bunny-Legal/releases')
   .then(function(r){return r.json()})
-  .then(function(rel){
-    if(!rel.assets)return;
-    for(var i=0;i<rel.assets.length;i++){
-      if(/\.apk$/i.test(rel.assets[i].name)){
-        dlUrl=rel.assets[i].browser_download_url;
-        dlLinks.forEach(function(a){a.href=dlUrl});
-        break;
+  .then(function(releases){
+    for(var i=0;i<releases.length;i++){
+      var assets=releases[i].assets||[];
+      for(var j=0;j<assets.length;j++){
+        if(/\.apk$/i.test(assets[j].name)){
+          dlUrl=assets[j].browser_download_url;
+          dlLinks.forEach(function(a){a.href=dlUrl});
+          return;
+        }
       }
     }
   })
